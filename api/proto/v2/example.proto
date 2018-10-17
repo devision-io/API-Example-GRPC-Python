@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package devision.example.v2;
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+option java_generic_services = true;
+option java_multiple_files = true;
+option java_outer_classname = "ExampleProto";
+option java_package = "io.devision.example.v2";
+option php_namespace = "Devision\\Example\\V2";
+
+// Работа с курсами валют
+service CurrencyRate {
+
+    // Получение курса валют к рублю от Центробанка
+    rpc ListCbrRates (ListCbrRatesRequest) returns (ListCbrRatesResponse) {
+        option (google.api.http) = {
+          post: "/v2/currency-rates/get"
+          body: '*'
+        };
+    }
+}
+
+message ListCbrRatesRequest {
+
+    // ОБЯЗАТЕЛЬНО. Дата в формате YYYY-MM-DD
+    string date = 1;
+}
+
+message ListCbrRatesResponse {
+
+    repeated CbrRate rates = 1;
+}
+
+message CbrRate {
+
+    // Дата в формате YYYY-MM-DD
+    string date = 1;
+
+    // Код валюты. Нпаример USD, UAH
+    string char_code = 2;
+
+    // Курс к рублю
+    float rate = 3;
+
+    // Имя валюты
+    string name = 4;
+}
+
+// Работа с текущим пользователям
+service User {
+    // Получение информации по пользователю, вызывающему API
+    rpc GetMe (google.protobuf.Empty) returns (GetMeResponse) {
+        option (google.api.http) = {
+          post: "/v2/user/me"
+          body: '*'
+        };
+    }
+}
+
+
+message GetMeResponse {
+
+    // ID пользователя
+    int64 user_id = 1;
+}
