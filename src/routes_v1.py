@@ -1,4 +1,4 @@
-from metasdk.apiserver import Api
+from metaendpoints.apimethod import Api
 
 from src.service.cbr_service import get_rates
 from src.v1 import example_pb2
