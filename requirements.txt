@@ -1,1 +1,1 @@
-metaendpoints==0.0.4
+metaendpoints==0.0.5
